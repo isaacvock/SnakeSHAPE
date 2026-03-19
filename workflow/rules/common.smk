@@ -70,7 +70,7 @@ def validate_bamcoverage_extra(extra):
     if any(token in forbidden for token in tokens):
         raise WorkflowError(
             "bamCoverage read extension is not appropriate for spliced RNA-seq "
-            "coverage tracks. Remove '--extendReads'/'-e' from bamcoverage_extra."
+            "coverage tracks. Remove --extendReads or -e from bamcoverage_extra."
         )
 
     return extra
@@ -276,6 +276,21 @@ def get_filter_samtools_flags(sample):
         flags.append("-F 0x8")  # mate unmapped
 
     return " ".join(flags)
+
+
+def strip_suffix(path, suffix):
+    path = str(path)
+    if not path.endswith(suffix):
+        raise WorkflowError(f"Expected path ending in '{suffix}', got '{path}'")
+    return path[: -len(suffix)]
+
+
+def get_rsem_reference_prefix_from_grp(path):
+    return strip_suffix(path, ".grp")
+
+
+def get_rsem_sample_prefix_from_genes(path):
+    return strip_suffix(path, ".genes.results")
 
 
 ### What samples get merged

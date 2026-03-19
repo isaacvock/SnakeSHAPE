@@ -94,7 +94,7 @@ if config.get("aligner", "star") == "star":
         conda:
             "../envs/rsem.yaml"
         params:
-            prefix=RSEM_REFERENCE_PREFIX,
+            prefix=lambda wc, output: get_rsem_reference_prefix_from_grp(output.grp),
             extra=RSEM_PREPARE_REFERENCE_EXTRA,
         threads: 24
         shell:
@@ -117,13 +117,15 @@ if config.get("aligner", "star") == "star":
         conda:
             "../envs/rsem.yaml"
         params:
-            prefix=RSEM_REFERENCE_PREFIX,
+            prefix=lambda wc, input: get_rsem_reference_prefix_from_grp(input.ref),
             paired_end=lambda wc: "--paired-end" if is_paired_end(wc.sample) else "",
             strandedness=RSEM_STRANDEDNESS,
             reads=get_cli_input_fastqs,
             gzip_flag=get_rsem_gzip_flag,
             extra=RSEM_QUANTIFY_EXTRA,
-            sample_prefix=lambda wc: f"results/rsem/{wc.sample}",
+            sample_prefix=lambda wc, output: get_rsem_sample_prefix_from_genes(
+                output.genes
+            ),
         threads: 24
         shell:
             """
