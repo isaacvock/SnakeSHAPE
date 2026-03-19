@@ -14,6 +14,7 @@ rule index_transcriptome_bam:
         samtools index -@ {threads} {input} 1> {log} 2>&1
         """
 
+
 ### Need to index FASTA file first
 rule index_rsem_transcriptome_fasta:
     input:
@@ -35,6 +36,7 @@ rule index_rsem_transcriptome_fasta:
 rule perbase:
     input:
         bam="results/align/{sample}.transcriptome.bam",
+        bai="results/align/{sample}.transcriptome.bam.bai",
         ref=RSEM_TRANSCRIPTOME_FASTA,
         fai=RSEM_TRANSCRIPTOME_FASTA_FAI,
     output:
