@@ -1,3 +1,20 @@
+### Need to index BAM file first
+rule index_transcriptome_bam:
+    input:
+        "results/align/{sample}.transcriptome.bam",
+    output:
+        "results/align/{sample}.transcriptome.bam.bai",
+    conda:
+        "../envs/genomictools.yaml"
+    log:
+        "logs/index_transcriptome_bam/{sample}.log",
+    threads: 8
+    shell:
+        """
+        samtools index -@ {threads} {input} 1> {log} 2>&1
+        """
+
+### Need to index FASTA file first
 rule index_rsem_transcriptome_fasta:
     input:
         RSEM_TRANSCRIPTOME_FASTA,
