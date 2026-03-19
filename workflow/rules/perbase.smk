@@ -18,9 +18,3 @@ rule perbase:
             --reference_fasta "{input.ref}" -Z "{input.bam}" -o "{output}" \
             1> "{log}" 2>&1
         """
-
-
-""" 
-TO-DO: Parse perbase output into a cleaner, annotated table that filters out unnecessary info,
-summarizes the important stuff, and adds gene-level annotation information (chromsome, strand)
-"""
