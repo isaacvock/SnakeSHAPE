@@ -62,10 +62,6 @@ if config.get("aligner", "star") == "star":
 
             mv "{params.out_prefix}Aligned.sortedByCoord.out.bam" "{output.aln}"
             mv "{params.out_prefix}Aligned.toTranscriptome.out.bam" "{output.transcriptome_raw}"
-            mv "{params.out_prefix}ReadsPerGene.out.tab" "{output.reads_per_gene}"
-            mv "{params.out_prefix}Log.out" "{output.log}"
-            mv "{params.out_prefix}SJ.out.tab" "{output.sj}"
-            mv "{params.out_prefix}Log.final.out" "{output.log_final}"
             """
 
     rule sort_transcriptome_bam:
