@@ -23,6 +23,8 @@ if config.get("aligner", "star") == "star":
     # indexing is done, but I don't think it hurts and
     # can catch provided-index-edge-cases
     rule align:
+        wildcard_constraints:
+            sample=r"(?!.*\.transcriptome(?:\.unsorted)?$).+",
         input:
             unpack(get_fq),
             idx=config.get("indices", "star_index"),
