@@ -1,0 +1,96 @@
+### REQUIRED INPUT
+
+# Path or URL to sample sheet (CSV format)
+# columns should be:
+# 1) sample_name: Name to assign to each sample
+# 2) fq1: Path to read 1
+# 3) fq2: Path to read 2; blank if single-end
+# 4) sra: SRA accession code if downloaded; keep empty if not
+# 5) PE: True if SRA downloaded data will be paired-end, False otherwise.
+#       Can leave empty if sra is blank
+samples: config/samples.csv
+
+# Path to annotation GTF
+annotation: "/path/to/genome.gtf"
+
+# Path to genome FASTA
+genome: "/path/to/genome.fasta"
+
+# Path to alginment indices (will be auto-created here if they don't already exist)
+indices: "star_index"
+
+### PIPELINE SETTINGS (tools to use, steps to run, etc.)
+
+# Trim reads?
+trim_reads: True
+
+# If trimming reads, which tool should be used (cutadapt or fastp)?
+trimmer: "cutadapt"
+
+# only "star" for now
+aligner: "star"
+
+# Strandedness of library (forward, reverse, or unstranded)
+strandedness: "reverse"
+
+
+### ALIGNMENT PARAMETERS
+
+# STAR alignment parameters
+star_align_params: "--twopassMode Basic --alignEndsType EndToEnd --outFilterType BySJout --outSJfilterCountUniqueMin 10 5 5 5 --outSJfilterCountTotalMin 10 5 5 5"
+
+
+# STAR indexing parameters
+star_index_params: ""
+
+
+
+### QUANTIFICATION PARAMETERS
+
+# featureCounts parameters
+# The default preserves the current rule behavior; remove `-f` for true gene-level
+# meta-feature counting, or add any other featureCounts options you need here.
+featurecounts_extra: "-f -O --nonOverlap 0 --extraAttributes gene_id"
+
+
+### TRANSCRIPT-LEVEL ANALYSIS PARAMETERS
+
+# perbase parameters
+perbase_extra: ""
+
+# RSEM will create files such as <prefix>.grp and <prefix>.transcripts.fa here.
+# The extracted transcript FASTA is also used as the perbase reference.
+rsem_reference_prefix: "resources/rsem/reference/rsem"
+rsem_prepare_reference_extra: ""
+rsem_quantify_extra: ""
+
+
+### RT-STOP PARAMETERS
+
+# Leave blank to disable RT-stop counting.
+# Valid values:
+#   - single_end: single-end libraries
+#   - read1: paired-end libraries where read 1 carries the RT-stop
+#   - read2: paired-end libraries where read 2 carries the RT-stop
+rtstop_library_schema: ""
+
+
+### COVERAGE TRACK PARAMETERS
+
+# bamCoverage natively supports split/spliced RNA-seq alignments.
+# Do not use `--extendReads` here, since that would incorrectly bridge introns.
+bamcoverage_extra: ""
+
+
+### TRIMMING PARAMETERS
+
+# Cutadapt parameters
+cutadapt_adapters: ""
+cutadapt_extra: ""
+
+# Fastp parameters
+fastp_adapters: ""
+fastp_extra: ""
+
+# FastQC parameters
+fastqc_extra: ""

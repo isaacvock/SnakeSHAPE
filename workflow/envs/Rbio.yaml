@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - r-dplyr
+  - r-data.table
+  - r-optparse
+  - bioconductor-rtracklayer
+  - bioconductor-genomicranges

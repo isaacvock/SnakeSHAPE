@@ -1,0 +1,47 @@
+from snakemake.utils import min_version
+
+##### set minimum snakemake version #####
+
+min_version("6.4.1")
+
+
+##### setup config and necessary parameters #####
+
+
+configfile: "config/config.yaml"
+
+
+##### setup report #####
+
+
+report: "report/workflow.rst"
+
+
+##### setup singularity #####
+
+
+# this container defines the underlying OS for each job when using the workflow
+# with --use-conda --use-singularity
+container: "docker://continuumio/miniconda3"
+
+
+##### load rules #####
+
+
+include: "rules/common.smk"
+include: "rules/preprocess.smk"
+include: "rules/align.smk"
+include: "rules/merge.smk"
+include: "rules/bam2bw.smk"
+include: "rules/call_peaks.smk"
+include: "rules/quantify.smk"
+include: "rules/perbase.smk"
+include: "rules/rtstop.smk"
+
+
+##### target rules #####
+
+
+rule all:
+    input:
+        get_final_output(),

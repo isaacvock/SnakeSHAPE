@@ -1,0 +1,3 @@
+sample_name,fq1,fq2,sra,PE
+WT_1,data/fastqs/WT_1/WT_1_R1.fq.gz,data/fastqs/WT_1/WT_1_R2.fq.gz,,
+WT_2,data/fastqs/WT_2/WT_2_R1.fq.gz,data/fastqs/WT_2/WT_2_R2.fq.gz,,
