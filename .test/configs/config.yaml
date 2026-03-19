@@ -72,7 +72,7 @@ rsem_quantify_extra: ""
 #   - single_end: single-end libraries
 #   - read1: paired-end libraries where read 1 carries the RT-stop
 #   - read2: paired-end libraries where read 2 carries the RT-stop
-rtstop_library_schema: "read2"
+rtstop_library_schema: ""
 
 
 ### COVERAGE TRACK PARAMETERS
