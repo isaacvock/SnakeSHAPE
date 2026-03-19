@@ -90,6 +90,8 @@ rule fastqc:
         "../envs/fastqc.yaml"
     params:
         extra=FASTQC_EXTRA,
+    resources:
+        mem_mb=9000,
     threads: 4
     shell:
         """

@@ -25,7 +25,7 @@ indices: "star_index"
 trim_reads: True
 
 # If trimming reads, which tool should be used (cutadapt or fastp)?
-trimmer: "cutadapt"
+trimmer: "fastp"
 
 # only "star" for now
 aligner: "star"
@@ -89,8 +89,8 @@ cutadapt_adapters: ""
 cutadapt_extra: ""
 
 # Fastp parameters
-fastp_adapters: ""
-fastp_extra: ""
+fastp_adapters: "--adapter_sequence AGATCGGAAGAGCACACGTCTGAACTCCAGTCA --adapter_sequence_r2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
+fastp_extra: "--trim_poly_x --cut_tail --cut_front --trim_tail1 3 --trim_front1 3 --trim_front2 3 --trim_tail2 3 -l 25" 
 
 # FastQC parameters
 fastqc_extra: ""
