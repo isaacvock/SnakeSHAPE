@@ -14,6 +14,7 @@ rule index_bams:
         samtools index -@ {threads} {input} 1> {log} 2>&1
         """
 
+
 # Then can make coverage tracks
 rule coverage_tracks:
     input:

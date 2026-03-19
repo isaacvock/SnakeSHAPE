@@ -10,7 +10,7 @@ rule perbase:
     conda:
         "../envs/perbase.yaml"
     params:
-        extra=PERBASE_EXTRA
+        extra=PERBASE_EXTRA,
     threads: 24
     shell:
         """

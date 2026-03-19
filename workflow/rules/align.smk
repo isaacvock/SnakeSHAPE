@@ -139,6 +139,7 @@ if config.get("aligner", "star") == "star":
                 1> "{log}" 2>&1
             """
 
+
 ### Filtering out unmapped, secondary, QC-failed, duplicate, and supplementary reads.
 ### For paired-end data, also drop reads with unmapped mates.
 rule filter:
