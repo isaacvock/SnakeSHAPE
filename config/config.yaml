@@ -50,7 +50,7 @@ star_index_params: ""
 # featureCounts parameters
 # The default preserves the current rule behavior; remove `-f` for true gene-level
 # meta-feature counting, or add any other featureCounts options you need here.
-featurecounts_extra: "-f -O --nonOverlap 0 --extraAttributes gene_id"
+featurecounts_extra: "-O --nonOverlap 0 --extraAttributes gene_id"
 
 
 ### TRANSCRIPT-LEVEL ANALYSIS PARAMETERS
