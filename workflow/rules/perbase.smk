@@ -15,6 +15,6 @@ rule perbase:
     shell:
         """
         perbase base-depth {params.extra} --threads {threads} \
-            --reference-fasta "{input.ref}" -Z "{input.bam}" -o "{output}" \
+            --ref-fasta "{input.ref}" -Z "{input.bam}" -o "{output}" \
             1> "{log}" 2>&1
         """
