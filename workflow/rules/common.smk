@@ -36,7 +36,7 @@ TRIMMER = config.get("trimmer", "cutadapt")
 # featureCounts settings
 FEATURECOUNTS_EXTRA = config.get(
     "featurecounts_extra",
-    "-f -O --nonOverlap 0 --extraAttributes gene_id",
+    "-O --nonOverlap 0 --extraAttributes gene_id",
 )
 FASTQC_EXTRA = config.get("fastqc_extra", "")
 PERBASE_EXTRA = config.get("perbase_extra", "")
