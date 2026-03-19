@@ -24,7 +24,7 @@ if config.get("aligner", "star") == "star":
     # can catch provided-index-edge-cases
     rule align:
         wildcard_constraints:
-            sample=r"(?!.*\.transcriptome(?:\.unsorted)?$).+",
+            sample=r"^(?!.*\.transcriptome).+$",
         input:
             unpack(get_fq),
             idx=config.get("indices", "star_index"),
@@ -66,7 +66,7 @@ if config.get("aligner", "star") == "star":
 
     rule sort_transcriptome_bam:
         input:
-            bam="results/align/{sample}.transcriptome.unsorted.bam",
+            bam="results/align/{sample}.transcriptome.strand_filtered.unsorted.bam",
         output:
             "results/align/{sample}.transcriptome.bam",
         log:
@@ -79,6 +79,23 @@ if config.get("aligner", "star") == "star":
             samtools sort -@ {threads} -o "{output}" "{input.bam}" \
                 1> "{log}" 2>&1
             """
+
+    rule filter_transcriptome_bam_by_strand:
+        input:
+            genome_bam="results/filter/{sample}.bam",
+            transcriptome_bam="results/align/{sample}.transcriptome.unsorted.bam",
+            annotation=config["annotation"],
+        output:
+            "results/align/{sample}.transcriptome.strand_filtered.unsorted.bam",
+        log:
+            "logs/align/{sample}_transcriptome_strand_filter.log",
+        conda:
+            "../envs/strandfilter.yaml"
+        params:
+            strandedness=config.get("strandedness", "reverse"),
+        threads: 4
+        script:
+            "../scripts/filter_transcriptome_bam_by_strand.py"
 
     rule rsem_prepare_reference:
         input:
