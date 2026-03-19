@@ -46,6 +46,7 @@ RSEM_REFERENCE_PREFIX = config.get(
 )
 RSEM_REFERENCE_GRP = f"{RSEM_REFERENCE_PREFIX}.grp"
 RSEM_TRANSCRIPTOME_FASTA = f"{RSEM_REFERENCE_PREFIX}.transcripts.fa"
+RSEM_TRANSCRIPTOME_FASTA_FAI = f"{RSEM_TRANSCRIPTOME_FASTA}.fai"
 RSEM_PREPARE_REFERENCE_EXTRA = config.get("rsem_prepare_reference_extra", "")
 RSEM_QUANTIFY_EXTRA = config.get("rsem_quantify_extra", "")
 
