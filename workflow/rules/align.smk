@@ -107,8 +107,8 @@ if config.get("aligner", "star") == "star":
 
     rule rsem_quantify:
         input:
-            ref=RSEM_REFERENCE_GRP,
             unpack(get_fq),
+            ref=RSEM_REFERENCE_GRP,
         output:
             genes="results/rsem/{sample}.genes.results",
             isoforms="results/rsem/{sample}.isoforms.results",
