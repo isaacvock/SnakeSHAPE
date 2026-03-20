@@ -1,4 +1,3 @@
-
 # Build STAR index
 rule index:
     input:
@@ -17,13 +16,12 @@ rule index:
     script:
         "../scripts/star-index.py"
 
+
 # Align with STAR
 # I think passing GTF here is redundant given how
 # indexing is done, but I don't think it hurts and
 # can catch provided-index-edge-cases
 rule align:
-    wildcard_constraints:
-        sample=r"(?!.*\.transcriptome(?:\.|$)).+",
     input:
         unpack(get_fq),
         idx=config.get("indices", "star_index"),
@@ -63,21 +61,6 @@ rule align:
         mv "{params.out_prefix}Aligned.toTranscriptome.out.bam" "{output.transcriptome_raw}"
         """
 
-rule sort_transcriptome_bam:
-    input:
-        bam="results/align/{sample}.transcriptome.strand_filtered.unsorted.bam",
-    output:
-        "results/align/{sample}.transcriptome.bam",
-    log:
-        "logs/align/{sample}_transcriptome_sort.log",
-    conda:
-        "../envs/genomictools.yaml"
-    threads: 8
-    shell:
-        """
-        samtools sort -@ {threads} -o "{output}" "{input.bam}" \
-            1> "{log}" 2>&1
-        """
 
 rule filter_transcriptome_bam_by_strand:
     input:
@@ -95,6 +78,24 @@ rule filter_transcriptome_bam_by_strand:
     threads: 4
     script:
         "../scripts/filter_transcriptome_bam_by_strand.py"
+
+
+rule sort_transcriptome_bam:
+    input:
+        bam="results/align/{sample}.transcriptome.strand_filtered.unsorted.bam",
+    output:
+        "results/align/{sample}.transcriptome.bam",
+    log:
+        "logs/align/{sample}_transcriptome_sort.log",
+    conda:
+        "../envs/genomictools.yaml"
+    threads: 8
+    shell:
+        """
+        samtools sort -@ {threads} -o "{output}" "{input.bam}" \
+            1> "{log}" 2>&1
+        """
+
 
 rule rsem_prepare_reference:
     input:
@@ -119,6 +120,7 @@ rule rsem_prepare_reference:
             1> "{log}" 2>&1
         """
 
+
 rule rsem_quantify:
     input:
         unpack(get_fq),
@@ -137,9 +139,7 @@ rule rsem_quantify:
         reads=get_cli_input_fastqs,
         gzip_flag=get_rsem_gzip_flag,
         extra=RSEM_QUANTIFY_EXTRA,
-        sample_prefix=lambda wc, output: get_rsem_sample_prefix_from_genes(
-            output.genes
-        ),
+        sample_prefix=lambda wc, output: get_rsem_sample_prefix_from_genes(output.genes),
     threads: 24
     shell:
         """
