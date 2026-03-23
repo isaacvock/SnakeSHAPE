@@ -2,7 +2,7 @@ if RTSTOP_LIBRARY_SCHEMA is not None:
 
     rule rtstop_count:
         input:
-            bam="results/align/{sample}.transcriptome.bam",
+            bam="results/align/{sample}.transcriptome.strand_filtered.unsorted.bam",
         output:
             "results/rtstop/{sample}.tsv.gz",
         log:
