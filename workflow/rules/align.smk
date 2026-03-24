@@ -52,7 +52,6 @@ rule align:
             --outFileNamePrefix "{params.out_prefix}" \
             --outSAMtype BAM SortedByCoordinate \
             --quantMode GeneCounts TranscriptomeSAM \
-            --quantTranscriptomeBan Singleend \
             --sjdbGTFfile "{input.gtf}" \
             {params.extra} \
             1> "{log}" 2>&1

@@ -353,12 +353,12 @@ def get_final_output():
             sample=SAMPS_TO_MERGE,
         )
     )
-    # final_output.extend(
-    #     expand("results/rsem/{sample}.genes.results", sample=SAMPS_TO_MERGE)
-    # )
-    # final_output.extend(
-    #     expand("results/rsem/{sample}.isoforms.results", sample=SAMPS_TO_MERGE)
-    # )
+    final_output.extend(
+        expand("results/rsem/{sample}.genes.results", sample=SAMPS_TO_MERGE)
+    )
+    final_output.extend(
+        expand("results/rsem/{sample}.isoforms.results", sample=SAMPS_TO_MERGE)
+    )
     final_output.extend(
         expand(
             "results/perbase/{sample}.tsv.gz",
