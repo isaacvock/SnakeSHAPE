@@ -176,10 +176,10 @@ def get_units_fastqs(wildcards):
             return expand(
                 "sra/{accession}_{read}.fastq",
                 accession=accession,
-                read=["R1", "R2"],
+                read=["1", "2"],
             )
         else:
-            return [f"sra/{accession}_R1.fastq"]
+            return [f"sra/{accession}.fastq"]
     if not is_paired_end(wildcards.sample):
         return [
             s["fq1"],
@@ -353,12 +353,12 @@ def get_final_output():
             sample=SAMPS_TO_MERGE,
         )
     )
-    # final_output.extend(
-    #     expand("results/rsem/{sample}.genes.results", sample=SAMPS_TO_MERGE)
-    # )
-    # final_output.extend(
-    #     expand("results/rsem/{sample}.isoforms.results", sample=SAMPS_TO_MERGE)
-    # )
+    final_output.extend(
+        expand("results/rsem/{sample}.genes.results", sample=SAMPS_TO_MERGE)
+    )
+    final_output.extend(
+        expand("results/rsem/{sample}.isoforms.results", sample=SAMPS_TO_MERGE)
+    )
     final_output.extend(
         expand(
             "results/perbase/{sample}.tsv.gz",

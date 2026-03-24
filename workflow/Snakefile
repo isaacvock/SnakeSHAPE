@@ -29,6 +29,7 @@ container: "docker://continuumio/miniconda3"
 
 
 include: "rules/common.smk"
+include: "rules/sra.smk"
 include: "rules/preprocess.smk"
 include: "rules/align.smk"
 include: "rules/bam2bw.smk"
