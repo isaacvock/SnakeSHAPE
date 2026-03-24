@@ -123,7 +123,7 @@ rule rsem_prepare_reference:
 
 rule rsem_quantify:
     input:
-        unpack(get_fq),
+        bam="results/align/{sample}.transcriptome.unsorted.bam",
         ref=RSEM_REFERENCE_GRP,
     output:
         genes="results/rsem/{sample}.genes.results",
@@ -136,17 +136,15 @@ rule rsem_quantify:
         prefix=lambda wc, input: get_rsem_reference_prefix_from_grp(input.ref),
         paired_end=lambda wc: "--paired-end" if is_paired_end(wc.sample) else "",
         strandedness=RSEM_STRANDEDNESS,
-        reads=get_cli_input_fastqs,
-        gzip_flag=get_rsem_gzip_flag,
         extra=RSEM_QUANTIFY_EXTRA,
         sample_prefix=lambda wc, output: get_rsem_sample_prefix_from_genes(output.genes),
     threads: 24
     shell:
         """
         mkdir -p "$(dirname "{params.sample_prefix}")"
-        rsem-calculate-expression --star --no-bam-output {params.paired_end} \
-            --strandedness {params.strandedness} {params.gzip_flag} \
-            -p {threads} {params.extra} {params.reads} "{params.prefix}" \
+        rsem-calculate-expression --alignments --no-bam-output {params.paired_end} \
+            --strandedness {params.strandedness} \
+            -p {threads} {params.extra} "{input.bam}" "{params.prefix}" \
             "{params.sample_prefix}" \
             1> "{log}" 2>&1
         """
