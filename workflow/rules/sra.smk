@@ -1,4 +1,6 @@
 rule get_sra_se:
+    wildcard_constraints:
+        accession=r"[^_/]+",
     output:
         "sra/{accession}.fastq",
     log:
@@ -15,6 +17,8 @@ rule get_sra_se:
 
 
 rule get_sra_pe:
+    wildcard_constraints:
+        accession=r"[^_/]+",
     output:
         fastq1="sra/{accession}_1.fastq",
         fastq2="sra/{accession}_2.fastq",
