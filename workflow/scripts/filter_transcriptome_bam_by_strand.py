@@ -91,7 +91,8 @@ def load_transcript_strands(annotation_path):
 
             attrs = parse_gtf_attributes(fields[8])
             transcript_id = attrs.get("transcript_id")
-            if transcript_id is None:
+            # Some GTFs emit transcript_id "" on non-transcript features.
+            if not transcript_id:
                 continue
 
             previous = transcript_strands.get(transcript_id)
